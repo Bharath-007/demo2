@@ -1,35 +1,69 @@
-import React from "react";
-import { Container } from "@mui/material";
-import Calendar from "./components/Calendar";
+import React, { useState } from 'react';
+import { CalendarEvent, Event } from './components/C1/types/types';
+import { parseEvents } from './components/C1/utils';
+import Calendar from './components/C1/Calender';
 
-// Sample events data
-const events = [
+const events: Event[] = [
   {
-    id: "1",
-    title: "Team Meeting",
-    start: new Date(2024, 7, 24, 10, 0), // August 24, 2024, 10:00 AM
-    end: new Date(2024, 7, 24, 11, 0),
-    description: "Weekly team sync meeting",
-    meetingLink: "https://meet.google.com/sample-link",
-  },
-  {
-    id: "2",
-    title: "Project Review",
-    start: new Date(2024, 7, 24, 14, 0), // August 24, 2024, 2:00 PM
-    end: new Date(2024, 7, 24, 15, 0),
-    description: "Q3 project review meeting",
-    meetingLink: "https://zoom.us/sample-link",
-  },
+    id: 1,
+    summary: "Meeting",
+    desc: "Project discussion",
+    start: "2025-03-19T10:00:00",
+    end: "2025-03-19T11:00:00",
+    attendees: null,
+    status: null,
+    comment: null,
+    score: {},
+    link: "",
+    user_det: {
+      id: 1,
+      question_score: null,
+      status: null,
+      candidate: {
+        id: 1,
+        candidate_firstName: "John",
+        candidate_lastName: "Doe",
+        candidateGender: "Male",
+        candidateComment: "",
+        candidate_email: "john.doe@example.com"
+      },
+      handled_by: {
+        id: 1,
+        last_login: null,
+        userEmail: "recruiter@example.com",
+        username: "recruiter123",
+        firstName: "Recruiter",
+        lastName: "User",
+        userRole: "HR"
+      },
+      job_id: {
+        id: 1,
+        jobRequest_Title: "Software Engineer",
+        jobRequest_Role: "Frontend Developer",
+        jobRequest_KeySkills: "React, TypeScript",
+        jobRequest_Description: "Develop UI components"
+      }
+    },
+    job_id: {
+      id: 1,
+      jobRequest_Title: "Software Engineer",
+      jobRequest_Role: "Frontend Developer",
+      jobRequest_KeySkills: "React, TypeScript",
+      jobRequest_Description: "Develop UI components"
+    }
+  }
 ];
 
-function App() {
+const App: React.FC = () => {
+  const [view, setView] = useState<'day' | 'week' | 'month'>('day');
+
+  // const parsedEvents: CalendarEvent[] = parseEvents(events);
+
   return (
-    <div className="min-h-screen bg-gray-100 py-8">
-      <Container maxWidth="lg">
-        <Calendar events={events} />
-      </Container>
+    <div>
+      <Calendar events={events} view={view} onViewChange={setView} />
     </div>
   );
-}
+};
 
 export default App;
