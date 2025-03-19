@@ -52,3 +52,43 @@ export interface Interview {
   user_det: UserDetails;
   job_id: JobDetails;
 }
+
+export type CalendarViewMode = "month" | "week" | "day";
+
+export interface CalendarEvent {
+  id: string;
+  title: string;
+  start: Date;
+  end: Date;
+  description?: string;
+  meetingLink?: string;
+}
+
+export interface DayEvents {
+  date: Date;
+  events: CalendarEvent[];
+}
+
+// export type CalendarViewMode = "day" | "week" | "month" | "year";
+
+// export interface CalendarEvent {
+//   id: string;
+//   title: string;
+//   start: Date;
+//   end: Date;
+//   description?: string;
+//   interviewer: string;
+//   round?: string;
+//   position: string;
+//   meetingLink?: string;
+//   meetingPlatform?: string;
+//   documents?: {
+//     resume?: string;
+//     aadhar?: string;
+//   };
+// }
+
+// export interface DayEvents {
+//   date: Date;
+//   events: CalendarEvent[];
+// }
