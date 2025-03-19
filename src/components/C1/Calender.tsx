@@ -55,7 +55,7 @@ const Calendar: React.FC<CalendarViewProps> = ({ events, view = 'month', onViewC
     };
 
     return (
-        <div className="bg-gray-50 min-h-screen p-4">
+        <div className="bg-gray-50 min-h-screen p-4" style={{}}>
             <CalendarHeader
                 currentDate={currentDate}
                 view={view}
