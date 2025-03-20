@@ -1,13 +1,11 @@
 // MonthView.tsx
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { CalendarEvent } from "./types/types";
 import {
   generateDaysInMonth,
   getEventsForDate,
   groupEventsByTime,
 } from "./utils";
-import EventPopup from "./EventPopup";
-import EventList from "./EventList";
 import EventCard from "./EventCard";
 interface MonthViewProps {
   events: CalendarEvent[];
@@ -15,12 +13,7 @@ interface MonthViewProps {
 }
 
 const MonthView: React.FC<MonthViewProps> = ({ events, currentDate }) => {
-  const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(
-    null
-  );
-  const [selectedDateEvents, setSelectedDateEvents] = useState<
-    CalendarEvent[] | null
-  >(null);
+
 
   const daysInMonth = generateDaysInMonth(
     currentDate.getFullYear(),
@@ -39,13 +32,8 @@ const MonthView: React.FC<MonthViewProps> = ({ events, currentDate }) => {
   const handleDateClick = (date: Date) => {
     const dateEvents = getEventsForDate(events, date);
     if (dateEvents.length > 0) {
-      setSelectedDateEvents(dateEvents);
+      // to add new event on clicking the date
     }
-  };
-
-  const handleEventClick = (event: CalendarEvent) => {
-    setSelectedEvent(event);
-    setSelectedDateEvents(null);
   };
 
   return (
@@ -73,16 +61,14 @@ const MonthView: React.FC<MonthViewProps> = ({ events, currentDate }) => {
           return (
             <div
               key={index}
-              className={`min-h-32 p-1 ${
-                isCurrentMonth ? "bg-white" : "bg-gray-50 text-gray-400"
-              } ${isToday ? "border-2 border-blue-500" : ""}`}
+              className={`min-h-32 p-1 ${isCurrentMonth ? "bg-white" : "bg-gray-50 text-gray-400"
+                } ${isToday ? "border-2 border-blue-500" : ""}`}
               onClick={() => handleDateClick(day)}
             >
               <div className="flex justify-center">
                 <span
-                  className={`font-semibold p-1 items-center ${
-                    isToday ? "text-blue-500" : ""
-                  }`}
+                  className={`font-semibold p-1 items-center ${isToday ? "text-blue-500" : ""
+                    }`}
                 >
                   {day.getDate()}
                 </span>
@@ -95,8 +81,6 @@ const MonthView: React.FC<MonthViewProps> = ({ events, currentDate }) => {
                       <div key={timeKey} className="flex justify-between p-3">
                         <EventCard
                           events={timeEvents}
-                          // onClose={handleClose}
-                          // open={anchorEl}
                         />
                       </div>
                     )
@@ -107,21 +91,6 @@ const MonthView: React.FC<MonthViewProps> = ({ events, currentDate }) => {
           );
         })}
       </div>
-
-      {/* {selectedEvent && (
-        <EventPopup
-          event={selectedEvent.event}
-          onClose={() => setSelectedEvent(null)}
-        />
-      )} */}
-
-      {/* {selectedDateEvents && (
-        <EventList
-          events={selectedDateEvents}
-          onEventClick={handleEventClick}
-          onClose={() => setSelectedDateEvents(null)}
-        />
-      )} */}
     </div>
   );
 };

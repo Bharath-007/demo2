@@ -1,9 +1,9 @@
-import { Box, Divider, IconButton, Popover, Typography } from "@mui/material";
+import { Box, Popover, Typography } from "@mui/material";
 import moment from "moment";
 import { FC, useState } from "react";
 import { CalendarEvent } from "./types/types";
-import { IoCloseCircle, IoPencil, IoTrash } from "react-icons/io5";
 import EventList from "./EventList";
+import EventPopup from "./EventPopup";
 
 interface IEventCard {
   events: CalendarEvent[];
@@ -11,13 +11,26 @@ interface IEventCard {
 
 const EventCard: FC<IEventCard> = ({ events }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(
+    null
+  );
 
   const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
-    if (events.length > 1) setAnchorEl(event.currentTarget);
+    if (events.length > 1) {
+      setAnchorEl(event.currentTarget)
+    } else {
+      handleEventClick(events[0])
+    }
   };
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+
+
+  const handleEventClick = (event: CalendarEvent) => {
+    setSelectedEvent(event);
   };
 
   const isOpen = Boolean(anchorEl);
@@ -32,19 +45,19 @@ const EventCard: FC<IEventCard> = ({ events }) => {
           width: "12vw",
           display: "flex",
           alignItems: "start",
-          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
           justifyContent: "space-between",
           borderLeft: "1vh solid #3b82f6",
           position: "relative",
           flexDirection: "column",
-          bgcolor: isOpen ? "#dbeafe" : "white", // Light blue when active
+          bgcolor: isOpen ? "#dbeafe" : "white",
           transition: "background-color 0.3s ease",
           cursor: "pointer",
           "&:hover": {
             bgcolor: "#dbeafe",
           },
         }}
-        onClick={handleOpen} // Open popover on click
+        onClick={handleOpen}
       >
         <Typography variant="body2" sx={{ fontWeight: 500, color: "grey.800" }}>
           {events[0]?.event?.user_det?.job_id?.jobRequest_Title ?? "N/A"}
@@ -54,16 +67,19 @@ const EventCard: FC<IEventCard> = ({ events }) => {
           {events[0]?.event?.user_det?.handled_by?.firstName ?? "N/A"}
         </Typography>
         <Typography variant="body2" sx={{ fontWeight: 500, color: "grey.800" }}>
-          {moment(events[0]?.start, "HH:mm").format("h A")} -{" "}
-          {moment(events[0]?.end, "HH:mm").format("h A")}
+          {moment(events[0]?.start).format(
+            moment(events[0]?.start).minutes() === 0 ? "h A" : "h:mm A"
+          )} -{" "}
+          {moment(events[0]?.end).format(
+            moment(events[0]?.end).minutes() === 0 ? "h A" : "h:mm A"
+          )}
         </Typography>
-
-        {/* Badge - Positioned in the top-right */}
         {events.length > 1 && (
           <Box
             sx={{
               backgroundColor: "#facc15",
-              color: "white",
+              color: "#000",
+              fontWeight: 600,
               borderRadius: "50%",
               width: "24px",
               height: "24px",
@@ -81,7 +97,6 @@ const EventCard: FC<IEventCard> = ({ events }) => {
           </Box>
         )}
       </Box>
-      {/* Popover - Opens on click */}
       {events.length > 1 && (
         <Popover
           id={id}
@@ -96,11 +111,14 @@ const EventCard: FC<IEventCard> = ({ events }) => {
         >
           <EventList
             events={events}
-            onEventClick={() => {}}
-            onClose={() => {}}
+            onEventClick={handleEventClick}
+            onClose={handleClose}
           />
         </Popover>
       )}
+      {
+        selectedEvent && <EventPopup event={selectedEvent.event} onClose={() => setSelectedEvent(null)} />
+      }
     </>
   );
 };

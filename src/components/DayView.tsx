@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { CalendarEvent } from "./types/types";
-import { formatTime, generateTimeSlots, getEventsForDate } from "./utils";
+import {  generateTimeSlots, getEventsForDate } from "./utils";
 import EventPopup from "./EventPopup";
 import EventCard from "./EventCard";
 
@@ -18,17 +18,16 @@ const DayView: React.FC<DayViewProps> = ({ events, currentDate }) => {
   const dayEvents = getEventsForDate(events, currentDate);
 
   const getEventsForTimeSlot = (timeSlot: string) => {
-    // Parse the time slot format "12 A.M" or "01 P.M"
+
     const timeParts = timeSlot.split(" ");
     const hourStr = timeParts[0].trim();
     const period = timeParts[1].trim();
 
     let hour = parseInt(hourStr);
 
-    // Convert to 24-hour format
-    if (period === "P.M" && hour !== 12) {
+    if (period === "PM" && hour !== 12) {
       hour += 12;
-    } else if (period === "A.M" && hour === 12) {
+    } else if (period === "AM" && hour === 12) {
       hour = 0;
     }
 
@@ -49,14 +48,18 @@ const DayView: React.FC<DayViewProps> = ({ events, currentDate }) => {
           const slotEvents = getEventsForTimeSlot(timeSlot);
           return (
             <div key={timeSlot} className="flex border-b">
-              <div className="p-2 min-h-32 w-20 text-right text-sky-500 border-r bg-white mr-px mb-px pt-24">
+              <div className={`min-h-32 w-60 text-center text-sky-500 border-r bg-white m-px mt-0 pt-24 `}>
                 {timeSlot}
               </div>
-              <div className="flex-grow p-2 relative bg-white mb-px pt-20"
+              <div className="flex-grow p-2 relative bg-white mb-px mr-px"
               // style={{ border: '1px solid red' }}
               >
                 {slotEvents.length > 0 ? (
-                  <EventCard events={slotEvents} />
+                  <div
+                    className="transform translate-y-12 transition duration-300 ease-in-out"
+                  >
+                    <EventCard events={slotEvents} />
+                  </div>
                 ) : (
                   <div className="h-full w-full"></div>
                 )}

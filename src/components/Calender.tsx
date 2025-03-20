@@ -5,6 +5,8 @@ import CalendarHeader from './CalendarHeader';
 import DayView from './DayView';
 import WeekView from './WeekView';
 import MonthView from './MonthView';
+import { Button } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
 const Calendar: React.FC<CalendarViewProps> = ({ events, view = 'month', onViewChange }) => {
     const [currentDate, setCurrentDate] = useState(new Date());
@@ -55,21 +57,33 @@ const Calendar: React.FC<CalendarViewProps> = ({ events, view = 'month', onViewC
     };
 
     return (
-        <div className="bg-gray-50 min-h-screen p-4" style={{}}>
-            <CalendarHeader
-                currentDate={currentDate}
-                view={view}
-                onPrevious={handlePrevious}
-                onNext={handleNext}
-                onToday={handleToday}
-                onViewChange={onViewChange}
-            />
-            <div className="mt-4">
-                {view === 'day' && <DayView currentDate={currentDate} events={parsedEvents} />}
-                {view === 'week' && <WeekView currentDate={currentDate} events={parsedEvents} />}
-                {view === 'month' && <MonthView currentDate={currentDate} events={parsedEvents} />}
+        <div className="bg-gray-50 min-h-screen p-4">
+            <div className="flex justify-between items-center w-full py-2">
+                <p className="font-bold text-xl text-gray-700">Your Todo's</p>
+                <Button
+                    variant="text"
+                    sx={{ textTransform: 'capitalize', fontWeight: 600, bgcolor: 'white' }}
+                    className="shadow"
+                >
+                    <AddIcon /> Create Schedule
+                </Button>
             </div>
-        </div>
+            <div style={{ minWidth: '1000px' }}>
+                <CalendarHeader
+                    currentDate={currentDate}
+                    view={view}
+                    onPrevious={handlePrevious}
+                    onNext={handleNext}
+                    onToday={handleToday}
+                    onViewChange={onViewChange}
+                />
+                <div>
+                    {view === 'day' && <DayView currentDate={currentDate} events={parsedEvents} />}
+                    {view === 'week' && <WeekView currentDate={currentDate} events={parsedEvents} />}
+                    {view === 'month' && <MonthView currentDate={currentDate} events={parsedEvents} />}
+                </div>
+            </div>
+        </div >
     );
 };
 

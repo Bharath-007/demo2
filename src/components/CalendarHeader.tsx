@@ -52,23 +52,24 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   };
 
   return (
-    <div className="flex justify-between items-center mb-4 px-4 py-2 bg-white rounded-t-lg">
+    <div className="flex justify-between items-center px-4 py-2 bg-white rounded-t-lg">
       <div className="flex items-center space-x-1">
         <IconButton
-          sx={{ border: "3px solid #3b82f6", borderRadius: 1, px: 1 }}
+          sx={{ border: "2px solid #3b82f6", borderRadius: 1, px: 1 }}
           onClick={onPrevious}
           className="p-2 hover:bg-gray-200 transition duration-200 w-1/3 h-8"
         >
           <FaChevronLeft />
         </IconButton>
         <IconButton
-          sx={{ border: "3px solid #3b82f6", borderRadius: 1, px: 1 }}
+          sx={{ border: "2px solid #3b82f6", borderRadius: 1, px: 1 }}
           onClick={onNext}
           className="p-2 hover:bg-gray-200 transition duration-200 w-1/3 h-8"
         >
           <FaChevronRight />
         </IconButton>
       </div>
+
       <div className="flex items-center">
         <h2 className="text-xl font-semibold">{getHeaderTitle()}</h2>
       </div>

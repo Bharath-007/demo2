@@ -85,20 +85,12 @@ export const groupEventsByTime = (
   return groupedEvents;
 };
 
-// export const generateTimeSlots = (): string[] => {
-//     const timeSlots = [];
-//     for (let hour = 0; hour < 24; hour++) {
-//         timeSlots.push(`${hour.toString().padStart(2, '0')}:00`);
-//         timeSlots.push(`${hour.toString().padStart(2, '0')}:30`);
-//     }
-//     return timeSlots;
-// };
 
 export const generateTimeSlots = (): string[] => {
   const timeSlots = [];
   for (let hour = 0; hour < 24; hour++) {
-    const period = hour < 12 ? "A.M" : "P.M";
-    const formattedHour = hour % 12 === 0 ? 12 : hour % 12; // Convert 0 -> 12 for AM and 12 -> 12 for PM
+    const period = hour < 12 ? "AM" : "PM";
+    const formattedHour = hour % 12 === 0 ? 12 : hour % 12;
     timeSlots.push(`${formattedHour.toString().padStart(2, "0")} ${period}`);
   }
   return timeSlots;
@@ -122,21 +114,17 @@ export const generateDaysInMonth = (year: number, month: number): Date[] => {
   const days = [];
   const firstDay = new Date(year, month, 1);
   const lastDay = new Date(year, month + 1, 0);
-
-  // add days from prev month to fill the first week
   const firstDayOfWeek = firstDay.getDay();
   for (let i = firstDayOfWeek; i > 0; i--) {
     const day = new Date(year, month, 1 - i);
     days.push(day);
   }
 
-  // add days of the curr month
   for (let i = 1; i <= lastDay.getDate(); i++) {
     const day = new Date(year, month, i);
     days.push(day);
   }
 
-  // add days from next month & fill last week
   const lastDayOfWeek = lastDay.getDay();
   for (let i = 1; i < 7 - lastDayOfWeek; i++) {
     const day = new Date(year, month + 1, i);

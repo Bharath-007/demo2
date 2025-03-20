@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { CalendarEvent } from "./types/types";
 import {
-  formatTime,
   generateTimeSlots,
   generateDaysOfWeek,
   getEventsForDate,
@@ -44,41 +43,38 @@ const WeekView: React.FC<WeekViewProps> = ({ events, currentDate }) => {
   };
 
   return (
-    <div className="flex flex-col h-screen overflow-auto bg-white rounded-lg shadow">
-      {/* Week header */}
-      <div className="flex-none grid grid-cols-8 border-b">
-        <div className="p-4 border-r"></div>
+    <div className="flex flex-col h-screen overflow-auto ">
+
+      <div className="flex-none grid grid-cols-8 border-b bg-gray-200">
+        <div className="p-4 border-r bg-white"></div>
         {daysOfWeek.map((day, index) => (
           <div
             key={index}
-            className={`p-4 text-center ${day.getDate() === new Date().getDate() &&
+            className={`p-4 text-center bg-white ${daysOfWeek.length === index + 1 ? '' : 'mr-px'} mb-px ${day.getDate() === new Date().getDate() &&
               day.getMonth() === new Date().getMonth() &&
               day.getFullYear() === new Date().getFullYear()
               ? "bg-blue-50"
               : ""
               }`}
           >
-            <div className="text-center font-medium">
+            <div className="text-center font-semibold">
               {day.getDate() +
                 " " +
                 day.toLocaleDateString("en-US", { month: "short" })}
             </div>
-            <div className="text-center font-medium">
+            <div className="text-center font-semibold">
               {day.toLocaleDateString("en-US", { weekday: "long" })}
             </div>
           </div>
         ))}
       </div>
-
-      {/* Time slots and events */}
-      <div className="flex-grow overflow-y-auto bg-gray-200">
+      <div className="flex-grow overflow-y-clip bg-gray-200">
         {timeSlots.map((timeSlot) => (
           <div
             key={timeSlot}
-            className="grid grid-cols-8 border-b bg-white mr-px mb-px"
-            // style={{ border: '1px solid red' }}
+            className="grid grid-cols-8 border-b bg-white mb-px"
           >
-            <div className="min-h-32 p-2 text-right text-sky-500 border-r">
+            <div className="min-h-20 px-2 text-right text-sky-500 pt-16" style={{ borderRight: '1px solid #F3F3F3' }}>
               {timeSlot}
             </div>
             {daysOfWeek.map((day, dayIndex) => {
@@ -86,10 +82,11 @@ const WeekView: React.FC<WeekViewProps> = ({ events, currentDate }) => {
               return (
                 <div
                   key={dayIndex}
-                  className="relative min-h-32 border-r flex pt-12"
+                  className={`relative min-h-20 border-r flex pt-12`}
+                  style={{ borderRight: '1px solid #F3F3F3' }}
                 >
                   {slotEvents.length > 0 && (
-                    <div className="absolute p-1 ">
+                    <div className="absolute p-0" >
                       {/* <div className="flex items-baseline"> */}
                       <EventCard events={slotEvents} />
                       {/* </div> */}
