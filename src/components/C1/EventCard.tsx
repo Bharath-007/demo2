@@ -29,7 +29,7 @@ const EventCard: FC<IEventCard> = ({ events }) => {
         sx={{
           padding: "5px",
           borderRadius: "4px",
-          width: "100%",
+          width: "12vw",
           display: "flex",
           alignItems: "start",
           boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
