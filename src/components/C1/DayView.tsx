@@ -44,51 +44,18 @@ const DayView: React.FC<DayViewProps> = ({ events, currentDate }) => {
 
   return (
     <div className="flex flex-col h-screen overflow-auto bg-gray-200">
-      {/* Day header */}
-      <div className="flex-none p-4 text-center border-b">
-        <div className="text-xl font-medium">
-          {currentDate.toLocaleDateString("en-US", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-        </div>
-      </div>
-
       <div className="flex-grow overflow-y-auto">
         {timeSlots.map((timeSlot) => {
           const slotEvents = getEventsForTimeSlot(timeSlot);
           return (
             <div key={timeSlot} className="flex border-b">
-              <div className="p-2 min-h-32 w-20 text-right text-sky-500 border-r bg-white mr-px mb-px">
+              <div className="p-2 min-h-32 w-20 text-right text-sky-500 border-r bg-white mr-px mb-px pt-24">
                 {timeSlot}
               </div>
-              <div className="flex-grow p-2 relative min-h-16 bg-white mb-px">
+              <div className="flex-grow p-2 relative bg-white mb-px pt-20"
+              // style={{ border: '1px solid red' }}
+              >
                 {slotEvents.length > 0 ? (
-                  //   <div className="space-y-1">
-                  //     {slotEvents.map((event) => (
-                  //       <div
-                  //         key={event.id}
-                  //         onClick={() => handleEventClick(event)}
-                  //         className="bg-blue-100 p-2 rounded hover:bg-blue-200 cursor-pointer"
-                  //       >
-                  //         <div className="flex justify-between">
-                  //           <span className="font-medium">{event.title}</span>
-                  //           <span className="text-sm text-gray-500">
-                  //             {formatTime(event.start.toISOString())} -{" "}
-                  //             {formatTime(event.end.toISOString())}
-                  //           </span>
-                  //         </div>
-                  //         {event.event?.user_det?.candidate && (
-                  //           <div className="text-sm text-gray-600">
-                  //             {event.event.user_det.candidate.candidate_firstName}{" "}
-                  //             {event.event.user_det.candidate.candidate_lastName}
-                  //           </div>
-                  //         )}
-                  //       </div>
-                  //     ))}
-                  //   </div>
                   <EventCard events={slotEvents} />
                 ) : (
                   <div className="h-full w-full"></div>

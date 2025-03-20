@@ -23,15 +23,13 @@ const WeekView: React.FC<WeekViewProps> = ({ events, currentDate }) => {
   const daysOfWeek = generateDaysOfWeek(currentDate);
 
   const getEventsForTimeSlot = (day: Date, timeSlot: string) => {
-    // Parse the time slot format "12 A.M" or "01 P.M"
     const timeParts = timeSlot.split(" ");
     const hour = parseInt(timeParts[0]);
     const period = timeParts[1];
 
-    // Convert to 24-hour format
     let hours = hour;
-    if (period === "P.M" && hour !== 12) hours += 12;
-    if (period === "A.M" && hour === 12) hours = 0;
+    if (period === "PM" && hour !== 12) hours += 12;
+    if (period === "AM" && hour === 12) hours = 0;
 
     const dayEvents = getEventsForDate(events, day);
 
@@ -53,13 +51,12 @@ const WeekView: React.FC<WeekViewProps> = ({ events, currentDate }) => {
         {daysOfWeek.map((day, index) => (
           <div
             key={index}
-            className={`p-4 text-center ${
-              day.getDate() === new Date().getDate() &&
+            className={`p-4 text-center ${day.getDate() === new Date().getDate() &&
               day.getMonth() === new Date().getMonth() &&
               day.getFullYear() === new Date().getFullYear()
-                ? "bg-blue-50"
-                : ""
-            }`}
+              ? "bg-blue-50"
+              : ""
+              }`}
           >
             <div className="text-center font-medium">
               {day.getDate() +
@@ -79,6 +76,7 @@ const WeekView: React.FC<WeekViewProps> = ({ events, currentDate }) => {
           <div
             key={timeSlot}
             className="grid grid-cols-8 border-b bg-white mr-px mb-px"
+            // style={{ border: '1px solid red' }}
           >
             <div className="min-h-32 p-2 text-right text-sky-500 border-r">
               {timeSlot}
@@ -88,13 +86,13 @@ const WeekView: React.FC<WeekViewProps> = ({ events, currentDate }) => {
               return (
                 <div
                   key={dayIndex}
-                  className="relative min-h-32 border-r flex items-baseline"
+                  className="relative min-h-32 border-r flex pt-12"
                 >
                   {slotEvents.length > 0 && (
-                    <div className="absolute p-1">
-                      <div className="flex items-baseline">
-                        <EventCard events={slotEvents} />
-                      </div>
+                    <div className="absolute p-1 ">
+                      {/* <div className="flex items-baseline"> */}
+                      <EventCard events={slotEvents} />
+                      {/* </div> */}
                     </div>
                   )}
                 </div>
