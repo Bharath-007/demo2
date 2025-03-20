@@ -88,48 +88,13 @@ const WeekView: React.FC<WeekViewProps> = ({ events, currentDate }) => {
               return (
                 <div
                   key={dayIndex}
-                  className="relative min-h-32 border-r"
-                  style={{ border: "1px solid red" }}
+                  className="relative min-h-32 border-r flex items-baseline"
                 >
                   {slotEvents.length > 0 && (
-                    <div className="absolute inset-0 p-1">
-                      {slotEvents.length > 2 ? (
-                        <div className="bg-blue-100 rounded p-1 h-full flex items-center justify-center">
-                          <div className="bg-yellow-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
-                            {slotEvents.length}
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="space-y-1">
-                          {/* {slotEvents.map((event) => (
-                            <div
-                              key={event.id}
-                              onClick={() => handleEventClick(event)}
-                              className="bg-blue-100 p-1 rounded hover:bg-blue-200 cursor-pointer"
-                            >
-                              <div className="text-xs font-medium truncate">
-                                {event.title}
-                              </div>
-                              <div className="text-xs text-gray-500 truncate">
-                                {formatTime(event.start.toISOString())}
-                              </div>
-                              {event.event?.user_det?.candidate && (
-                                <div className="text-xs text-gray-600 truncate">
-                                  {
-                                    event.event.user_det.candidate
-                                      .candidate_firstName
-                                  }{" "}
-                                  {
-                                    event.event.user_det.candidate
-                                      .candidate_lastName
-                                  }
-                                </div>
-                              )}
-                            </div>
-                          ))} */}
-                          <EventCard events={slotEvents} />
-                        </div>
-                      )}
+                    <div className="absolute p-1">
+                      <div className="flex items-baseline">
+                        <EventCard events={slotEvents} />
+                      </div>
                     </div>
                   )}
                 </div>
